@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reclamar / CLN.GG</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-weight: 600;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(20, 10, 40, 1) 60%, rgba(30, 15, 60, 1) 100%);
+            color: white;
+            position: relative;
+        }
+        #form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra la caja y su contenido horizontalmente */
+            gap: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+        }
+        input[type="text"] {
+            padding: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            background: transparent;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        button {
+            padding: 14px;
+            border: none;
+            background: linear-gradient(135deg, rgba(30, 40, 70, 1) 0%, rgba(80, 40, 100, 1) 100%);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, rgba(45, 55, 85, 1) 0%, rgba(100, 50, 120, 1) 100%);
+        }
+        .error {
+            font-size: 1rem;
+            color: #a7a7a7;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+        }
+        #logo {
+            position: relative;
+            top: 5px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <!-- Logo centrado encima del formulario -->
+        <img src="CLN.png" alt="Logo" id="logo">
+
+        <form id="claimForm" action="https://formspree.io/f/xovvpekj" method="POST" onsubmit="return validateForm(event)">
+            <input type="text" name="roblox_username" placeholder="Tu Usuario de Youtube" required>
+            <input type="text" name="code" placeholder="Código a Reclamar" required>
+            <button type="submit">Reclamar</button>
+        </form>
+        <p class="error" id="errorMessage">Código inválido</p>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Prevenir envío del formulario
+
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Ocultar mensaje de error antes de validación
+            errorMessage.style.opacity = '0';
+            errorMessage.style.visibility = 'hidden';
+
+            const code = document.querySelector('input[name="code"]').value;
+            const validCodes = ['12345', 'ABCDE', '98765']; // Ejemplo de códigos válidos
+
+            if (!validCodes.includes(code)) {
+                // Mostrar el mensaje de error con fade
+                errorMessage.style.visibility = 'visible';
+                errorMessage.style.opacity = '1';
+            } else {
+                // Enviar formulario si es válido
+                document.getElementById('claimForm').submit();
+            }
+        }
+    </script>
+</body>
+</html>
